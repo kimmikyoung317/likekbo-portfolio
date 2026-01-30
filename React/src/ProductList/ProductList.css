@@ -1,0 +1,131 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}    
+
+/* 전체 섹션 컨테이너 */
+.product-all-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  background-color: #fff;
+}
+
+/* 타이틀 디자인 (매거진 느낌) */
+.product-title {
+  grid-column: 1 / -1; /* 그리드 전체 너비 차지 */
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+/* 상품 그리드 시스템 (반응형 3열) */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  column-gap: 30px;
+  row-gap: 60px;
+}
+
+/* 개별 상품 카드 */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+/* 이미지 래퍼 (이미지 호버 효과) */
+.product-img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* 매거진 스타일의 세로 비율 */
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+.product-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.product-card:hover .product-img-wrapper img {
+  transform: scale(1.1);
+}
+
+/* 상품 정보 영역 */
+.product-info {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #111;
+  margin: 0;
+}
+
+.price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 액션 아이콘 (장바구니 등) */
+.action-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.cart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.cart-btn::after {
+  content: '🛒'; /* 아이콘 폰트나 SVG로 교체 가능 */
+  font-size: 1.2rem;
+  justify-items: center;
+  align-items: end;
+}
+
+/* VIEW MORE 버튼 */
+.view-more-container {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.view-more-btn {
+  padding: 15px 40px;
+  background-color: transparent;
+  border: 1px solid #111;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.view-more-btn:hover {
+  background-color: #111;
+  color: #fff;
+}

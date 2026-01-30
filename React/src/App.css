@@ -1,0 +1,338 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+/* 1. 네비게이션 바 복구 (정렬 및 간격) */
+.premium-header {
+  display: flex;
+  justify-content: space-between; /* 양 끝 정렬 */
+  align-items: center;
+  padding: 10px 5%;
+}
+
+.main-nav {
+  display: flex;
+  gap: 30px; /* 메인 메뉴 간격 */
+  font-weight: bold;
+}
+
+.utility-nav {
+  display: flex;
+  gap: 15px;
+  font-size: 0.8rem; /* 글씨 크기를 작게 */
+  color: #666;
+}
+
+.util-link {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.3s;
+}
+
+.util-link:hover { color: #2b59a2; }
+
+.brand-logo {
+    text-decoration: none;
+    color: #2b59a2;
+    font-size: 35px;
+    font-weight: 900;
+}
+.premium-nav {
+   position: absolute;
+    gap: 15px;
+    align-items: center;
+    justify-self: center;
+    
+    }
+
+.nav-item {
+    position: relative; /* 드롭다운의 기준 */
+    padding-bottom: 10px;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    min-width: 180px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    padding: 15px 0;
+    z-index: 1000;
+}
+.nav-item:hover .dropdown-menu {
+    display: block; /* 마우스 호버 시 노출 */
+}
+
+.dropdown-item {
+    padding: 10px 25px;
+    color: #666;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.dropdown-item:hover { background: #f8f9fa; color: #1e56a0; }
+
+.nav-link {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+}
+
+/* 2. 히어로 섹션 (이미지 최적화) */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 70px); /* 헤더 높이 제외 */
+    background: url('./assets/main_bg.jpg') no-repeat center center / cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+  background: rgba(0, 0, 0, 0.4); 
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    animation: slideInRight 1s ease-out forwards;/*추가됨*/
+}
+
+@keyframes slideInRight {
+    from { 
+        transform: translateX(50px); /* 너무 멀리서 오지 않게 50px 정도로 조절 */
+        opacity: 0; 
+    }
+    to { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+.hero-subtitle, 
+.hero-title, 
+.hero-desc, 
+.hero-btn {
+    opacity: 0; /* 시작할 때 숨김 */
+    animation: slideInRight 0.8s ease-out forwards;
+}
+
+/*  1번: 서브타이틀 (가장 먼저) */
+.hero-subtitle {
+    animation-delay: 0.2s;
+}
+
+/*  2번: 메인 타이틀 (WIN THE GAME) */
+.hero-title {
+    animation-delay: 0.4s;
+}
+
+/*  3번: 전설적인 기록~ (설명문) */
+.hero-desc {
+    animation-delay: 0.6s;
+}
+
+/*  4번: SHOP NOW 버튼 (마지막 포인트) */
+.hero-btn {
+    animation-delay: 0.8s;
+}
+
+/* 기존 hero-content의 애니메이션은 제거 (개별 적용했기 때문) */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    /* animation: slideInRight ... 제거 */
+}
+
+
+.hero-title {
+    font-size: 120px; 
+    font-weight: 900;
+    margin: 15% 0 0 0;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    line-height: 0.9;
+}
+
+.hero-subtitle {
+    position: absolute;
+    left: 50%;
+    top: -10%;         
+    transform: translateX(-50%);
+    font-size: 25px;
+    font-weight: 400;
+    color: #dffd34;
+}
+
+.hero-description {
+    font-size: 18px;
+    margin-bottom: 35px;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 20px 35px;
+    background: #2b59a2; 
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 22px;
+    transition: 0.3s;
+    border: none;
+    
+    /* [전기 광선 설정] */
+    position: relative;
+    overflow: hidden; 
+    z-index: 1;
+}
+
+/* 1. 전기가 흐르는 얇은 선 */
+.hero-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    /* 아주 좁은 각도(5도)만 색상을 주어 '짧은 선'처럼 보이게 함 */
+    background: conic-gradient(
+        transparent, 
+        transparent 10%, 
+        #dffd34 15%, 
+        transparent 20%
+    );
+    animation: electric-flow 1.5s linear infinite; /* 속도를 빠르게 해서 전기 느낌 강조 */
+    z-index: -2;
+}
+
+/* 2. 버튼의 안쪽 면 (광선이 테두리에만 보이게 가려줌) */
+.hero-btn::after {
+    content: '';
+    position: absolute;
+    inset: 1px; /* 파트너님이 요청하신 1px 두께의 선 느낌 */
+    background: #2b59a2;
+    border-radius: 50px;
+    z-index: -1;
+    transition: 0.3s;
+}
+
+/* 호버 시 광선이 더 강해짐 */
+.hero-btn:hover {
+    color: #dffd34;
+    box-shadow: 0 0 15px rgba(223, 253, 52, 0.8); /* 미세한 글로우 */
+}
+
+.hero-btn:hover::after {
+    background: #1e56a0; /* 호버 시 안쪽 배경색 살짝 변경 */
+}
+
+/* 전기 흐름 애니메이션 */
+@keyframes electric-flow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 클릭 시 강렬한 스파크 느낌 */
+.hero-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 0 30px #dffd34;
+}
+
+.hero-desc {
+    font-size: 16px;
+    margin-bottom: 1.4%;
+}
+
+
+
+/* 6. 반응형 레이아웃 */
+@media (max-width: 1024px) {
+    .premium-header { height: 70px; padding: 1% 5%; }
+    .product-grid { padding: 3% 5%; }
+   
+}
+
+@media (max-width: 768px) {
+    .premium-header { height: 95px; display: flex; justify-content: right;
+         align-items:end; flex-direction: column; gap: 15px; }
+    .hero-title { font-size: 40px; }
+    .product-grid { grid-template-columns: 1fr; }
+
+    .hero-subtitle {
+        top: -15%;         
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 23px;
+        font-weight: 400;
+        color: #dffd34;
+    }
+
+
+    .hero-title {
+    font-size: 100px; 
+    font-weight: 900;
+    margin: 20% 0 0 0;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+}
+
+
+}
+
+@media (max-width: 500px) {
+    
+    
+    .header {height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    padding:  0 10%;
+    background: #fff;
+    height: 80px; 
+    font-size: 10px;
+    position: sticky;}
+
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
+    .hero-title { 
+        justify-content: center; align-items: center; font-size: 30px; margin: 0;
+    }
+    .premium-header-header{margin-bottom: 20%;}
+    .hero-subtitle {
+     
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-50%);
+    font-size: 17px;
+    font-weight: 400;
+    color: #dffd34;
+    }
+
+    .hero-title {
+    font-size: 80px; 
+    font-weight: 900;
+    margin: 48% 0 0 0;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+}
+    
+
+
+
+}
