@@ -1,0 +1,11 @@
+
+
+
+
+.success-container {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}

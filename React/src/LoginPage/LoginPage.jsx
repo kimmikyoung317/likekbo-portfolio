@@ -1,107 +1,215 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './LoginPage.css';
+import React, { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./LoginPage.css";
 
-const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [qrImage, setQrImage] = useState('');
-    const [authCode, setAuthCode] = useState('');
-    const [step, setStep] = useState(1); 
-    const navigate = useNavigate();
+const BACKEND_URL = "http://localhost:8080";
 
-    // [1단계] 로그인 시작 (백엔드 AuthController의 /login 타격! ⚾️)
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            // 🚨 백엔드 컨트롤러 주소(/login)와 파라미터(email)를 정확히 맞춥니다! ㅋ
-            const res = await axios.post('http://localhost:8080/api/auth/login', { email: email });
-            
-            // 업체 응답이 String으로 올 수 있어 파싱 처리 ⚾️
-            const responseData = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+const onlyDigits = (v) => String(v ?? "").replace(/[^0-9]/g, "");
+const isValidKoreanPhone = (p) => /^010\d{8}$/.test(p);
 
-            if (responseData.result) {
-                setQrImage(responseData.data.qr); 
-                setStep(2); // QR 화면으로 전환!
-                
-                // 2. 6자리 보안번호 요청 📱
-                getSecurityNumber();
-            }
-        } catch (error) {
-            console.error("로그인 시도 실패:", error);
-            alert("사용자 정보를 확인할 수 없습니다. 이메일을 다시 확인해주세요! ㅋ");
-        }
-    };
+const LoginPage = ({ onLoginSuccess }) => {
+  const navigate = useNavigate();
 
-    // [2단계] 보안번호 가져오기
-    const getSecurityNumber = async () => {
-        try {
-            // 🚨 백엔드 컨트롤러 @PostMapping("/getSp") 주소와 일치!
-            const res = await axios.post('http://localhost:8080/api/auth/getSp', { email: email });
-            const data = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
-            
-            if (data.result) {
-                setAuthCode(data.data.servicePassword); 
-                startPolling(); // 승인 감시 시작! ㅋ
-            }
-        } catch (err) {
-            console.error("보안번호 로드 실패", err);
-        }
-    };
+  const [step, setStep] = useState(1);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const cleanPhone = useMemo(() => onlyDigits(phoneNumber), [phoneNumber]);
 
-    // [3단계] 실시간 승인 확인 (폴링) ⚾️
-    const startPolling = () => {
-        const checkInterval = setInterval(async () => {
-            try {
-                // 🚨 백엔드 컨트롤러 @PostMapping("/checkResult") 주소와 일치!
-                const res = await axios.post('http://localhost:8080/api/auth/checkResult', { email: email });
-                const data = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+  const [code, setCode] = useState("");
+  const cleanCode = useMemo(() => onlyDigits(code), [code]);
 
-                if (data.result && data.data.auth === "S") {
-                    clearInterval(checkInterval); 
-                    alert("⚾️ KBOLike! 인증 성공! 환영합니다. ㅋ");
-                    navigate('/'); // 메인으로 입장! [cite: 2026-01-20]
-                }
-            } catch (err) {
-                console.error("승인 대기 중...", err);
-            }
-        }, 2000); 
+  const [loading, setLoading] = useState(false);
+  const [devCode, setDevCode] = useState("");
 
-        // 컴포넌트 언마운트 시 폴링 종료 (메모리 누수 방지 ㅋ)
-        return () => clearInterval(checkInterval);
-    };
+  const requestOtp = async (e) => {
+    e.preventDefault();
 
-    return (
-        <div className="login-container">
-            <div className="login-box">
-                <h2 className="auth-title">{step === 1 ? "PREMIUM LOGIN" : "SECURITY AUTH"}</h2>
-                
-                {step === 1 ? (
-                    <form onSubmit={handleLogin} className="auth-form">
-                        <div className="input-group">
-                            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일 주소를 입력하세요" required />
-                        </div>
-                        <button type="submit" className="view-detail-btn">passwordless ⚾️</button>
-                    </form>
-                ) : (
-                    <div className="auth-step">
-                        <p className="auth-desc">휴대폰에서 <strong>패스워드리스 앱</strong>을 실행하여<br/>아래 QR코드를 찍거나 보안번호를 확인하세요! ⚾️</p>
-                        
-                        <div className="qr-wrapper">
-                            {qrImage && <img src={qrImage} alt="QR Code" className="qr-img" />}
-                        </div>
-                        
-                        <div className="code-display">
-                            <span className="code-label">보안번호 (6자리)</span>
-                            <h1 className="code-number">{authCode}</h1>
-                        </div>
-                        
-                        <div className="loading-dots">승인 대기 중입니다...</div>
-                    </div>
-                )}
+    if (!cleanPhone || !isValidKoreanPhone(cleanPhone)) {
+      alert("휴대폰 번호는 010으로 시작하는 11자리 숫자만 가능합니다. (예: 01012345678)");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await axios.post(
+        `${BACKEND_URL}/api/auth/phone/request`,
+        { phoneNumber: cleanPhone },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      const data = res.data;
+
+      const codeFromServer = data?.devCode || data?.code || data?.authCode || "";
+      setDevCode(codeFromServer);
+
+      alert(data?.message || "인증번호가 발송되었습니다!");
+      setStep(2);
+    } catch (error) {
+      console.error("인증번호 요청 에러:", error?.response?.status, error?.response?.data);
+
+      const msg =
+        error?.response?.data?.message ||
+        (typeof error?.response?.data === "string" ? error.response.data : null) ||
+        `인증번호 요청 실패 (status: ${error?.response?.status ?? "unknown"})`;
+
+      alert(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyOtp = async (e) => {
+    e.preventDefault();
+
+    if (!cleanPhone || !isValidKoreanPhone(cleanPhone)) {
+      alert("휴대폰 번호가 올바르지 않습니다.");
+      return;
+    }
+
+    if (!cleanCode || cleanCode.length < 4) {
+      alert("인증번호를 입력해주세요.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await axios.post(
+        `${BACKEND_URL}/api/auth/phone/verify`,
+        { phoneNumber: cleanPhone, code: cleanCode },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      const data = res.data;
+
+      const accessToken = data?.accessToken || data?.token;
+      const name = data?.name || data?.userName || data?.username;
+      const role = data?.role || data?.userRole || "USER";
+
+      if (!accessToken) {
+        console.error("verify 응답에 토큰이 없습니다:", data);
+        alert("로그인에 실패했습니다. (토큰 없음)");
+        return;
+      }
+
+      if (!name) {
+        console.error("verify 응답에 name이 없습니다:", data);
+        alert("로그인에 실패했습니다. (이름 없음)");
+        return;
+      }
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userRole", role);
+
+      onLoginSuccess?.();
+
+      alert(`반갑습니다, ${name}님!`);
+      navigate("/");
+    } catch (error) {
+      console.error("인증번호 검증 에러:", error?.response?.status, error?.response?.data);
+
+      const msg =
+        error?.response?.data?.message ||
+        (typeof error?.response?.data === "string" ? error.response.data : null) ||
+        `로그인 실패 (status: ${error?.response?.status ?? "unknown"})`;
+
+      alert(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const goBackToStep1 = () => {
+    setStep(1);
+    setCode("");
+    setDevCode("");
+  };
+
+  return (
+    <div className="login-container">
+      <div className="login-box">
+        <h2>LOGIN⚾️KBOLike</h2>
+
+        {step === 1 && (
+          <form className="login-form" onSubmit={requestOtp}>
+            <div className="input-wrapper">
+              <input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                placeholder="휴대폰 번호 (예: 01012345678)"
+                autoComplete="tel"
+                inputMode="numeric"
+              />
             </div>
-        </div>
-    );
+
+            <button type="submit" disabled={loading}>
+              {loading ? "전송 중..." : "인증번호 받기"}
+            </button>
+
+            <div className="signup-prompt">
+              <p>처음이신가요?</p>
+              <Link className="go-signup-link" to="/signup">
+                회원가입
+              </Link>
+            </div>
+          </form>
+        )}
+
+        {step === 2 && (
+          <form className="login-form" onSubmit={verifyOtp}>
+            <div className="input-wrapper">
+              <input value={cleanPhone} disabled placeholder="휴대폰 번호" />
+            </div>
+
+            <div className="input-wrapper">
+              <input
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                placeholder="인증번호 입력"
+                inputMode="numeric"
+              />
+
+              {devCode ? (
+                <p className="be_member">
+                  (개발용) 인증코드: <b>{devCode}</b>
+                </p>
+              ) : (
+                <p className="be_member">인증번호가 안 오면 번호를 다시 확인해주세요.</p>
+              )}
+            </div>
+
+            <button type="submit" disabled={loading}>
+              {loading ? "확인 중..." : "로그인"}
+            </button>
+
+            <div className="login-footer">
+              <a
+                href="#!"
+                onClick={(e) => {
+                  e.preventDefault();
+                  goBackToStep1();
+                }}
+              >
+                번호 다시 입력
+              </a>
+              <span> | </span>
+              <a
+                href="#!"
+                onClick={(e) => {
+                  e.preventDefault();
+                  requestOtp(e);
+                }}
+              >
+                인증번호 재전송
+              </a>
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default LoginPage;

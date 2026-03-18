@@ -1,16 +1,13 @@
-
 *
 {
     margin: 0;
     padding: 0;
     text-decoration: none;
-
 }
-
 
 /* 1. 관리자 레이아웃 컨테이너 */
 .admin-page-container {
-    padding: 40px 10%;
+    padding: 120px 10%;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -19,7 +16,7 @@
     font-size: 28px;
     color: #1e56a0;
     font-weight: 800;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     border-left: 5px solid #1e56a0;
     padding-left: 15px;
 }
@@ -37,14 +34,14 @@
     margin-top: 0;
     color: #444;
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .admin-input-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .admin-input-group input {
@@ -52,6 +49,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
+    
 }
 
 .file-input-wrapper {
@@ -229,3 +227,191 @@
 }
 
 
+/* 관리자 페이지 전체 컨테이너 */
+.admin-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    font-family: 'Pretendard', sans-serif;
+}
+
+/* 헤더 영역 */
+.admin-header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 20px;
+}
+
+.admin-header h1 {
+    font-size: 28px;
+    color: #111;
+    letter-spacing: -1px;
+}
+
+.admin-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* 폼 레이아웃 */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 입력 그룹 (라벨 + 인풋) */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 가로 배치용 로우 (상품명/구단, 가격/재고) */
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* 라벨 스타일 */
+.input-group label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    padding-left: 2px;
+}
+
+/* 인풋 & 셀렉트 & 텍스트에어리어 통합 스타일 */
+.input-group input, 
+.input-group select, 
+.input-group textarea {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.input-group input:focus, 
+.input-group select:focus, 
+.input-group textarea:focus {
+    outline: none;
+    border-color: #2b59a2; /* 포인트 컬러 */
+    background: #fff;
+    box-shadow: 0 0 8px rgba(43, 89, 162, 0.1);
+}
+
+/* 텍스트에어리어 높이 조절 */
+.input-group textarea {
+    height: 100px;
+    resize: none;
+}
+
+/* 등록 버튼 - 하이테크 스타일 */
+.submit-btn {
+    margin-top: 20px;
+    padding: 15px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background: #2b59a2; /* KIA의 열정적인 느낌 혹은 세련된 블루 */
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .admin-container {
+        margin: 20px;
+        padding: 20px;
+    }
+    .input-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 관리자 상단 바 레이아웃 */
+.admin-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.admin-badge {
+    background: #eef2ff;
+    color: #2b59a2;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* 관리자 로그아웃 버튼 (세련된 레드) */
+.admin-logout-btn {
+    background: #fff;
+    border: 1px solid #ff4d4f;
+    color: #ff4d4f;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-logout-btn:hover {
+    background: #ff4d4f;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(255, 77, 79, 0.2);
+}
+
+/* 이미지 업로드 영역 */
+.image-drop-zone {
+    width: 100%;
+    height: 180px;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.image-drop-zone:hover {
+    border-color: #2b59a2;
+    background: #f0f4f8;
+}
+
+.upload-placeholder {
+    text-align: center;
+    color: #888;
+}
+
+.plus-icon {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.upload-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 로고/모자 비율 유지 */
+}
