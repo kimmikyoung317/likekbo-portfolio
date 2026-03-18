@@ -2,6 +2,7 @@ package com.example.LikeKBO.entity;
 
 
 import jakarta.persistence.*;
+//import jakarta.persistence.criteria.Order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(name = "order_Items")
-public class OrderItem {
+public
+class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

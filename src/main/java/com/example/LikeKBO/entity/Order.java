@@ -3,14 +3,14 @@ package com.example.LikeKBO.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter; // Setter 추가
+import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter // 롬복 세터를 열어주어 하이버네이트가 자유롭게 접근하게 합니다.
+@Setter
 @NoArgsConstructor
 @Table(name="orders")
 public class Order {
@@ -21,7 +21,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user; // 필드명이 user입니다.
+    private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -34,7 +34,6 @@ public class Order {
     private LocalDateTime createdAt;
     private String paymentKey;
 
-    // [수정] 메서드 이름을 필드명과 일치시킵니다. (setMember -> setUser)
     public void setUser(User user){
         this.user = user;
     }
@@ -44,7 +43,6 @@ public class Order {
         orderItem.setOrder(this);
     }
 
-    // [수정] 생성 메서드 내에서도 setUser를 호출합니다.
     public static Order createOrder(User user, Delivery delivery, OrderItem... orderItems){
         Order order = new Order();
         order.setUser(user);
