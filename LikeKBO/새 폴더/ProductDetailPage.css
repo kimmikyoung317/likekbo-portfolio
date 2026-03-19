@@ -1,0 +1,296 @@
+
+*
+{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    
+
+}
+
+
+.product-grid {
+    /* 기존 속성 유지 */
+    min-height: 980px; 
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 60px 10%; */
+    grid-template-columns: repeat(3, 1fr); /* 칼같이 3열 정렬 */
+    gap: 40px;
+    padding: 80px 10%;
+    
+    /* 배경 설정을 위한 추가 */
+    position: relative; 
+    background: #f4f4f4; /* 이미지가 연해질 때 밑에 보일 깔끔한 회색톤 */
+    overflow: hidden;
+}
+
+.product-img-wrapper {
+    overflow: hidden; /* 영역 밖으로 나가는 이미지 차단 */
+    border-radius: 12px;
+}
+
+.product-grid::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* 배경 이미지 설정 */
+    background: url('./assets/main_bg.jpg') no-repeat center center / cover;
+    background-attachment: fixed; /* 스크롤 시 배경은 고정되어 더 고급스럽습니다 */
+    
+    /* 0.05~0.1 사이로 아주 연하게 깔아줍니다 */
+    opacity: 0.08; 
+    z-index: 0;
+}
+.product-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9); /* 카드를 살짝 투명하게 하면 배경과 더 잘 어우러집니다 */
+    backdrop-filter: blur(5px); /* 카드 뒤 배경을 살짝 흐리게 처리 (트렌디한 효과) */
+    
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+}
+
+.product-card h3{
+    font-size: 16px;
+    color: #dffd34; 
+    font-weight: 700;
+}
+
+.product-card p{
+    font-size: 16px;
+    color: #ff4d4d;
+    padding: 5px 0 5px; 
+    font-weight: 400;
+
+}
+
+.product-card img{
+     color: #2b59a2;
+     width: 100%;
+     transition: transform 0.5s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.1); /* 이미지 확대 */
+}
+
+
+.product-info {
+    text-align: left; /* 기본 왼쪽 정렬 */
+    margin-top: 15px;
+}
+
+.product-name {
+    font-weight: 400;
+    font-size: 20px;
+    color: #333;
+}
+
+.price-container {
+    display: flex;
+    justify-content: space-between; /* 가격은 왼쪽, 아이콘은 오른쪽 */
+    align-items: center;
+    margin-top: 8px;
+}
+
+.product-price {
+    font-weight: 700;
+    font-size: 16px;
+    color: #222;
+}
+
+.action-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.wish-btn, .cart-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* 야구공 모양 찜 아이콘 */
+.wish-btn::before { content: '⚾️'; } 
+/* 장바구니 아이콘 */
+.cart-btn::before { content: '🛒'; }
+
+
+
+
+
+
+
+
+
+/* 상품 리스트 전용: 둥근 전기 광선 버튼 ⚾️ */
+.view-detail-btn {
+    width: 80%;
+    padding: 10px 15px; /* 둥근 모양을 위해 패딩 살짝 조절 */
+    background: #2b59a2; 
+    color: #fff;
+    border: none;
+    border-radius: 50px; /* 완전한 둥근 모양 */
+    font-weight: 800;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    
+    /* [전기 광선 핵심 설정] */
+    position: relative;
+    overflow: hidden; 
+    z-index: 1;
+}
+
+/* 1. 전기가 흐르는 얇은 선 (본체) */
+.view-detail-btn::before {
+    content: '';
+    position: absolute;
+    top: -100%; /* 범위를 넓혀 회전 궤도를 크게 잡음 */
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    /* 짧고 강렬한 #dffd34 전기 광선 */
+    background: conic-gradient(
+        transparent, 
+        transparent 10%, 
+        #dffd34 15%, 
+        transparent 25% /*전기광선꼬리길이*/
+    );
+    animation: electric-flow 1.5s linear infinite;
+    z-index: -2;
+    display: none; /* 평소엔 숨김 */
+}
+
+.view-detail-btn:hover::before {
+    display: block; /* 호버 시에만 찌릿하게 작동 */
+}
+
+/* 2. 버튼의 안쪽 면 (1px 테두리 효과) */
+.view-detail-btn::after {
+    content: '';
+    position: absolute;
+    inset: 1px; /* 광선테두리 굵기 */
+    background: #2b59a2;
+    border-radius: 50px;
+    z-index: -1;
+    transition: 0.3s;
+}
+
+/* 호버 시 대각선 반동과 글로우 효과 */
+.view-detail-btn:hover {
+    color: #dffd34;
+    /* 파트너님이 좋아하는 대각선 이동 */
+    transform: translate(-5px, -5px);
+    box-shadow: 0 10px 20px rgba(223, 253, 52, 0.2);
+}
+
+.view-detail-btn:hover::after {
+    background: #1e56a0; /* 호버 시 더 짙은 네이비로 변경 */
+}
+
+/* ======detailpage===== */
+
+.premium-detail-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 50px auto;
+    gap: 60px;
+    padding: 0 20px;
+}
+
+.product-visual { flex: 1.2; }
+
+.main-img-box {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    width: 100%;
+    aspect-ratio: 800 / 566; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+.product-content { flex: 1; padding-top: 20px; }
+
+.brand-tag { color: #222; font-weight: 800; font-size: 14px; text-decoration: none; }
+.title-main { font-size: 28px; font-weight: 700; margin: 15px 0 5px; color: #333; }
+.title-sub { color: #888; font-size: 15px; margin-bottom: 30px; }
+
+.price-section { border-top: 1px solid #eee; padding-top: 20px; margin-bottom: 20px; }
+.price-label { font-size: 13px; color: #888; }
+.price-amount { font-size: 32px; font-weight: 800; color: #222; }
+.price-unit { font-size: 20px; font-weight: 700; margin-left: 2px; }
+
+.shipping-banner {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+.action-area { display: flex; flex-direction: column; gap: 12px; }
+
+/* 두 번째 사진의 빨간색 포인트 버튼! [cite: 2026-01-07] */
+.main-buy-btn {
+    width: 100%;
+    padding: 20px;
+    background: #1e56a0; /* 세련된 레드 톤 */
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.main-buy-btn:hover { background: #dffd34; color: #1e56a0;
+}
+
+.sub-buttons { display: flex; gap: 10px; }
+.icon-sub-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #ebeebe;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.5rem;
+    color: #002d62; /* KBO 네이비 컬러 ⚾️ */
+}

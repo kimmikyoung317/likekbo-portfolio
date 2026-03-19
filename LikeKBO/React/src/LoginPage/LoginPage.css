@@ -1,0 +1,133 @@
+
+*
+{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+
+}
+
+/* LoginPage.css */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* 화면 중앙 배치 */
+  background-color: #f5f6f7; /* 네이버 배경색 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.be_member{
+    margin-top: 10px;
+    font-size: 15px;
+    color: #818181;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  text-align: center;
+}
+
+.login-box h2 {
+  font-size: 35px;
+  font-weight: 700;
+  color: #1e56a0; 
+  margin-bottom: 30px;
+  letter-spacing: -1px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-wrapper {
+  position: relative;
+  text-align: left;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 1px solid #dadada;
+  border-radius: 6px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-box input:focus {
+  border-color: #1e56a0; /* 포커스 시 녹색 테두리 */
+}
+
+.login-box button {
+  width: 100%;
+  padding: 15px;
+  background-color: #1e56a0;
+  color: #cfe93c;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.login-box button:hover {
+  background: #cfe93c;
+  color: #cfe93c;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); transition: all 0.5s ease;
+  transform: translate(-1px, -1px); /* 버튼이 대각선 위로 들리는 느낌 */
+  transition: all 0.2s ease;
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #8e8e8e;
+}
+
+.login-footer a {
+  text-decoration: none;
+  color: #8e8e8e;
+  margin: 0 10px;
+}
+
+/* 회원가입 유도 영역 */
+.signup-prompt {
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.signup-prompt p {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.go-signup-link {
+    color: #2b59a2; /* 포인트 컬러 */
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 8px 20px;
+    
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.go-signup-link:hover {
+   
+    box-shadow: 0 0 15px #c6d8f7;
+    transform: translateY(-2px);
+    border-color: #dffd34;
+}

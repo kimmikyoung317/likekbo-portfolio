@@ -1,0 +1,231 @@
+
+*
+{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+
+}
+
+
+/* 1. 관리자 레이아웃 컨테이너 */
+.admin-page-container {
+    padding: 40px 10%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-title {
+    font-size: 28px;
+    color: #1e56a0;
+    font-weight: 800;
+    margin-bottom: 30px;
+    border-left: 5px solid #1e56a0;
+    padding-left: 15px;
+}
+
+/* 2. 상품 등록 섹션 (카드 형태) */
+.admin-upload-section {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+}
+
+.admin-upload-section h3 {
+    margin-top: 0;
+    color: #444;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.admin-input-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.admin-input-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.file-input-wrapper {
+    margin: 15px 0;
+}
+
+.admin-submit-btn {
+    background: #1e56a0;
+    color: #eee;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: #eee 0.2s;
+}
+
+.admin-submit-btn:hover {
+    background: #153e75;
+}
+
+/* 3. 상품 관리 테이블 */
+.admin-table-wrapper {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.admin-table th {
+    background: #f4f7fa;
+    color: #1e56a0;
+    padding: 15px;
+    font-weight: 700;
+    border-bottom: 2px solid #eee;
+}
+
+.admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.admin-table tr:hover {
+    background-color: #fcfdfe;
+}
+
+.admin-prod-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.delete-btn {
+    background: #ffeded;
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.delete-btn:hover {
+    background: #ff4d4d;
+    color: #fff;
+}
+
+/* 4. 반응형 조절 */
+@media (max-width: 768px) {
+    .admin-page-container { padding: 20px 5%; }
+    .admin-table { font-size: 12px; }
+    .admin-prod-img { width: 40px; height: 40px; }
+}
+
+
+
+/* 미리보기 컨테이너 */
+.preview-frame {
+    width: 100%;
+    max-width: 400px; /* 관리자 페이지용 적당한 크기 */
+    aspect-ratio: 800 / 566; /* 🚨 룰루님이 정하신 황금 비율! */
+    margin: 20px auto;
+    border: 2px dashed #002D62;
+    position: relative;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.preview-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 비율이 달라도 꽉 채워주는 마법 ㅋ */
+}
+
+/* 목록 테이블 이미지 */
+.admin-prod-img {
+    width: 80px;
+    height: 56.6px; /* 비율 맞춰서 ㅋ */
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* 5. 관리자 로그인 전용 스타일 (추가) ㅋ */
+.admin-login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+.admin-login-container h2 {
+    color: #1e56a0;
+    margin-bottom: 25px;
+    font-weight: 800;
+}
+
+.admin-login-container form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.admin-login-container input {
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.admin-login-container button {
+    background: #1e56a0;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-login-container button:hover {
+    background: #dffd34;
+    color:#153e75;
+    font-size: 14px;
+    transform: translateY(-2px);
+}
+
+/* 6. 수정 모드 전용 취소 버튼 ㅋ */
+.cancel-btn {
+    background: #f4f4f4;
+    color: #666;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+

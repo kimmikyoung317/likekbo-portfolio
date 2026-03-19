@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+/* AdminLogin.css */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* 화면 중앙 배치 */
+  background-color: #f5f6f7; /* 네이버 느낌 배경 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.admin-be-member {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #818181;
+}
+
+.admin-login-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  text-align: center;
+}
+
+.admin-login-box h2 {
+  font-size: 35px;
+  font-weight: 700;
+  color: #1e56a0;
+  margin-bottom: 30px;
+  letter-spacing: -1px;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-input-wrapper {
+  position: relative;
+  text-align: left;
+}
+
+.admin-login-box input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 1px solid #dadada;
+  border-radius: 6px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.admin-login-box input:focus {
+  border-color: #1e56a0;
+}
+
+.admin-login-box button {
+  width: 100%;
+  padding: 15px;
+  background-color: #1e56a0;
+  color: #cfe93c;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.admin-login-box button:hover {
+  background: #cfe93c;
+  color: #1e56a0; /* 로그인 CSS에서 hover 글자가 같은 색이라 안 보일 수 있어서 개선 */
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transform: translate(-1px, -1px);
+  transition: all 0.2s ease;
+}
+
+.admin-login-footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #8e8e8e;
+}
+
+.admin-login-footer a {
+  text-decoration: none;
+  color: #8e8e8e;
+  margin: 0 10px;
+}
+
+/* (선택) 안내 문구 영역 */
+.admin-login-hint {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #999;
+}

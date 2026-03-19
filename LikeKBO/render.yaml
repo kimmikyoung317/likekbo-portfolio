@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: likekbo-server
+    runtime: java
+    rootDir: LikeKBO
+    plan: free
+    region: singapore
+    buildCommand: ./gradlew build
+    startCommand: java -jar build/libs/*.jar
+    envVars:
+      - key: MAIL_PASSWORD
+        sync: false
