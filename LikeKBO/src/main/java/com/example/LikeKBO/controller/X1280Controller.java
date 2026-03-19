@@ -18,7 +18,7 @@ public class X1280Controller {
     // React calls: GET /api/v1/auth/status?user=...
     @GetMapping("/status")
     public String checkUserStatus(@RequestParam("userId") String userId) {
-//        return service.isAp(userId);
+        // return service.isAp(userId);
         String result = service.isAp(userId);
         System.out.println("/status : "+result);
         return result;

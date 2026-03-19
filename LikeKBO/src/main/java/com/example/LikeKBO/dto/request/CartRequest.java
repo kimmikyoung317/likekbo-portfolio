@@ -1,7 +1,13 @@
 package com.example.LikeKBO.dto.request;
 
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class CartRequest {
- public static void main(String[] args) {
- 
- }
+    private Long productId;
+    private int quantity;
 }

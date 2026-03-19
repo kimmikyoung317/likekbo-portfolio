@@ -33,4 +33,9 @@ public class Board {
     private String adminReady;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column
+    private Long parentId;
+
+
 }

@@ -1,0 +1,143 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+
+// 컴포넌트 임포트
+import LoginPage from './LoginPage/LoginPage';
+import SignUpPage from './SignUpPage/SignUpPage';
+import AdminProductPage from './AdminProductPage/AdminProductPage';
+import ProductDetailPage from './ProductDetailPage/ProductDetailPage';
+import ProductList from './ProductList/ProductList'; 
+import CartPage from './CartPage/CartPage';
+import BoardPage from './BoardPage/BoardPage'; 
+import Footer from './Footer/Footer';
+import LogoBanner from './LogoBanner/LogoBanner';
+import MyPage from './MyPage/MyPage';
+import './App.css';
+
+// 1. Anti-Gravity용 무중력 로고 컴포넌트
+const FloatingLogo = ({ src, top, left }) => (
+  <motion.div
+    drag
+    dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
+    initial={{ y: 0 }}
+    animate={{ 
+      y: [0, -15, 0],
+      rotate: [0, 2, -2, 0]
+    }}
+    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+    style={{ 
+      position: 'absolute', 
+      top: top, 
+      left: left, 
+      zIndex: 10,
+      cursor: 'grab'
+    }}
+  >
+    <img src={src} alt="floating-logo" style={{ width: '80px', filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.2))' }} />
+  </motion.div>
+);
+
+// 2. Home 컴포넌트 (무중력 레이어 추가)
+const Home = () => {
+  const teamLinks = [
+    { name: 'KIA', url: 'https://www.tigers.co.kr' },
+    { name: 'Lotte', url: 'https://www.giantsclub.com' },
+    { name: 'Samsung', url: 'https://www.samsunglions.com' },
+    { name: 'Doosan', url: 'https://www.doosanbears.com' },
+    { name: 'LG', url: 'https://www.lgtwins.com' },
+    { name: 'SSG', url: 'https://www.ssglanders.com' },
+    { name: 'KT', url: 'https://www.ktwiz.co.kr' },
+    { name: 'NC', url: 'https://www.ncdinos.com' },
+    { name: 'Hanwha', url: 'https://www.hanwhaeagles.co.kr' },
+    { name: 'Kiwoom', url: 'https://www.heroesbaseball.co.kr' }
+  ];
+
+  return (
+    <div className="home-wrapper">
+      <div className="hero-section" style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Anti-Gravity 요소들 */}
+        <FloatingLogo src="/images/kia_logo.png" top="15%" left="10%" />
+        <FloatingLogo src="/images/lotte_logo.png" top="55%" left="80%" />
+        <FloatingLogo src="/images/samsung_logo.png" top="40%" left="75%" />
+
+        <div className="hero-content">
+          <span className="hero-subtitle">PREMIUM KBO GOODS STORE</span>
+          <h1 className="hero-title">WIN THE <br/> GAME</h1>
+          <p className="hero-desc">전설적인 기록, 그 이상의 가치를 소장하세요.</p>
+          <Link to="/product" className="hero-btn">SHOP NOW ⚾️</Link>
+        </div>
+      </div>
+      <LogoBanner />
+    </div>
+  );
+};
+
+// 3. 메인 App 컴포넌트
+function App() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState(() => {
+    const saved = localStorage.getItem('kboCart');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // ⚾️ 정렬 정책: KIA(1) - Lotte(2) - Samsung(99) [cite: 2026-01-27]
+  const sortedProducts = useMemo(() => {
+    const teamOrder = ["KIA", "Lotte", "LG", "Doosan", "KT", "SSG", "Hanwha", "NC", "Kiwoom", "Samsung"];
+    return [...products].sort((a, b) => {
+      const idxA = teamOrder.indexOf(a.team);
+      const idxB = teamOrder.indexOf(b.team);
+      return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
+    });
+  }, [products]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/product/all') 
+      .then(res => {
+        setProducts(res.data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const addToCart = (product) => {
+    setCart(prev => [...prev, product]);
+    alert("장바구니에 담겼습니다!");
+  };
+
+  if (loading) return <div className="loading">로딩 중...</div>;
+
+  return (
+    <Router>
+      <div className="app-container">
+        <header className="premium-header">
+          <Link to="/" className="brand-logo">⚾️KBOLiKe</Link>
+          <nav className="main-nav">
+            <Link to="/product" className="nav-link">PRODUCTS</Link>
+            <Link to="/board" className="nav-link">BOARD</Link>
+            <Link to="/cart" className="nav-link">CART ({cart.length})</Link>
+            <Link to="/login" className="nav-link">LOGIN</Link>
+          </nav>
+        </header>
+
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/product" element={<ProductList items={sortedProducts} onAddToCart={addToCart} />} />
+            <Route path="/product/:id" element={<ProductDetailPage items={products} onAddToCart={addToCart} />} />
+            <Route path="/cart" element={<CartPage cart={cart} setCart={setCart} />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/board" element={<BoardPage />} />
+            <Route path="/admin" element={<AdminProductPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
+  );
+}
+
+export default App;

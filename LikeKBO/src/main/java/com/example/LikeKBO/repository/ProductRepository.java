@@ -11,10 +11,12 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // 특정 팀의 굿즈(상품)만 모아볼 때 사용
-    // Product 엔티티 안에 TeamName이라는 enum 혹은 필드가 있어야 작동합니다.
-    List<Product> findByTeamName(Product.TeamName teamName);
 
-    // 키워드로 상품 검색 (확장성 고려)
+    //특정 팀의 굿즈(상품) 조회
+    //[무결점 보정] 엔티티의 team 필드가 String이므로 인자도 String으로 맞춤
+    List<Product> findByTeam(String team);
+
+
+        //키워드로 상품 검색
     List<Product> findByNameContaining(String keyword);
 }

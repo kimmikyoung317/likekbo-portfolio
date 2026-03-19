@@ -27,6 +27,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role ;
 
-
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 }

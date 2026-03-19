@@ -6,7 +6,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-// 여기에 <T>를 붙여야 아래 detail의 T가 "아, 이거구나!" 하고 인식됩니다.
+
+// 여기에 <T>를 붙여야 아래 detail 인식됩니다.
 public class ProductUpdateRequest<T> {
     private String name;
     private String description;

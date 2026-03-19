@@ -1,16 +1,22 @@
-*
-{
+/* 기본 초기화 */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     text-decoration: none;
 }
 
-/* 1. 네비게이션 바 복구 (정렬 및 간격) */
+body {
+    font-family: 'Pretendard', sans-serif;
+    overflow-x: hidden;
+}
+
+/* 1. 네비게이션 바 (최상단 고정) */
 .premium-header {
-    display: flex;
-    justify-content: space-between;
-    align-items:end;
-    padding:  0 20%;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 5%;
     background: #fff;
     height: 100px; 
     position: sticky;
@@ -20,11 +26,11 @@
 }
 
 .brand-logo {
-    text-decoration: none;
     color: #2b59a2;
     font-size: 35px;
     font-weight: 900;
 }
+
 .premium-nav {
     /* display: flex;
     gap: 15px; 
@@ -33,36 +39,14 @@
     gap: 40px;
 }
 
-.nav-item {
-    position: relative; /* 드롭다운의 기준 */
-    padding-bottom: 10px;
+.main-nav {
+    display: flex;
+    gap: 30px;
+    font-weight: bold;
 }
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #fff;
-    min-width: 180px;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    padding: 15px 0;
-    z-index: 1000;
-}
-.nav-item:hover .dropdown-menu {
-    display: block; /* 마우스 호버 시 노출 */
-}
-
-.dropdown-item {
-    padding: 10px 25px;
-    color: #666;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.dropdown-item:hover { background: #f8f9fa; color: #1e56a0; }
 
 .nav-link {
-    text-decoration: none;
+   text-decoration: none;
     color: #666;
     font-size: 16px;
     font-weight: 400;
@@ -70,156 +54,78 @@
     letter-spacing: -0.3px;
 }
 
-/* 2. 히어로 섹션 (이미지 최적화) */
+.nav-link:hover { color: #2b59a2; }
+
+.utility-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.util-link {
+    font-size: 0.85rem;
+    color: #888;
+    transition: 0.3s;
+}
+
+.util-link:hover { color: #2b59a2; }
+
+/* 2. 히어로 섹션 */
 .hero-section {
     position: relative;
     width: 100%;
-    height: calc(100vh - 70px); /* 헤더 높이 제외 */
-    background: url('./assets/main_bg.jpg') no-repeat center center / cover;
+    height: 85vh; /* 슬라이더 자리를 위해 약간 줄임 */
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./assets/main_bg.jpg') no-repeat center center / cover;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-  background: rgba(0, 0, 0, 0.4); 
-}
-
 .hero-content {
-    position: relative;
-    z-index: 2;
     text-align: center;
     color: #fff;
-    animation: slideInRight 1s ease-out forwards;/*추가됨*/
-}
-
-@keyframes slideInRight {
-    from { 
-        transform: translateX(50px); /* 너무 멀리서 오지 않게 50px 정도로 조절 */
-        opacity: 0; 
-    }
-    to { 
-        transform: translateX(0); 
-        opacity: 1; 
-    }
-}
-
-.hero-subtitle, 
-.hero-title, 
-.hero-desc, 
-.hero-btn {
-    opacity: 0; /* 시작할 때 숨김 */
-    animation: slideInRight 0.8s ease-out forwards;
-}
-
-/*  1번: 서브타이틀 (가장 먼저) */
-.hero-subtitle {
-    animation-delay: 0.2s;
-}
-
-/*  2번: 메인 타이틀 (WIN THE GAME) */
-.hero-title {
-    animation-delay: 0.4s;
-}
-
-/*  3번: 전설적인 기록~ (설명문) */
-.hero-desc {
-    animation-delay: 0.6s;
-}
-
-/*  4번: SHOP NOW 버튼 (마지막 포인트) */
-.hero-btn {
-    animation-delay: 0.8s;
-}
-
-/* 기존 hero-content의 애니메이션은 제거 (개별 적용했기 때문) */
-.hero-content {
     position: relative;
-    z-index: 2;
-    text-align: center;
-    color: #fff;
-    /* animation: slideInRight ... 제거 */
 }
-
-
-.hero-title {
-    font-size: 120px; 
-    font-weight: 900;
-    margin: 15% 0 0 0;
-    letter-spacing: -2px;
-    text-transform: uppercase;
-    line-height: 0.9;
-}
-
 
 .hero-subtitle {
-    position: absolute;
-    top: -10%;         
-    left: 42%;
-    transform: translateX(-50%);
+    display: block;
     font-size: 25px;
-    font-weight: 400;
     color: #dffd34;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: slideInUp 0.8s 0.2s forwards;
 }
 
-.hero-description {
+.hero-title {
+    font-size: 110px;
+    font-weight: 900;
+    line-height: 0.9;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: slideInUp 0.8s 0.4s forwards;
+}
+
+.hero-desc {
     font-size: 18px;
-    margin-bottom: 35px;
-    opacity: 0.9;
-    font-weight: 400;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: slideInUp 0.8s 0.6s forwards;
 }
 
+/* 3. 전기 광선 SHOP NOW 버튼 */
 .hero-btn {
     display: inline-block;
-    padding: 20px 35px;
-    background: #2b59a2; 
+    padding: 20px 45px;
+    background: #2b59a2;
     color: #fff;
-    text-decoration: none;
     border-radius: 50px;
     font-weight: 700;
-    font-size: 22px;
-    transition: 0.3s;
-    border: none;
-    
-    /* [전기 광선 설정] */
+    font-size: 20px;
     position: relative;
-    overflow: hidden; 
+    overflow: hidden;
     z-index: 1;
+    opacity: 0;
+    animation: slideInUp 0.8s 0.8s forwards;
 }
-
-/* 1. 전기가 흐르는 얇은 선 */
-.hero-btn::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    /* 아주 좁은 각도(5도)만 색상을 주어 '짧은 선'처럼 보이게 함 */
-    background: conic-gradient(
-        transparent, 
-        transparent 10%, 
-        #dffd34 15%, 
-        transparent 20%
-    );
-    animation: electric-flow 1.5s linear infinite; /* 속도를 빠르게 해서 전기 느낌 강조 */
-    z-index: -2;
-}
-
-/* 2. 버튼의 안쪽 면 (광선이 테두리에만 보이게 가려줌) */
-.hero-btn::after {
-    content: '';
-    position: absolute;
-    inset: 1px; /* 파트너님이 요청하신 1px 두께의 선 느낌 */
-    background: #2b59a2;
-    border-radius: 50px;
-    z-index: -1;
-    transition: 0.3s;
-}
-
-/* 호버 시 광선이 더 강해짐 */
 .hero-btn:hover {
     color: #dffd34;
     box-shadow: 0 0 15px rgba(223, 253, 52, 0.4); /* 미세한 글로우 */
@@ -228,277 +134,105 @@
 .hero-btn:hover::after {
     background: #1e56a0; /* 호버 시 안쪽 배경색 살짝 변경 */
 }
-
-/* 전기 흐름 애니메이션 */
-@keyframes electric-flow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.hero-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(transparent, transparent 10%, #dffd34 15%, transparent 20%);
+    animation: electric-flow 1.5s linear infinite;
+    z-index: -2;
 }
 
-/* 클릭 시 강렬한 스파크 느낌 */
-.hero-btn:active {
-    transform: scale(0.96);
-    box-shadow: 0 0 30px #dffd34;
-}
-
-.hero-desc {
-    font-size: 16px;
-    margin-bottom: 1.4%;
-}
-
-.add-to-cart-btn {
-    background: #1e56a0;
-    color: #fff;
-    border: none;
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 15px;
-}
-
-/* 5. 인증 (로그인/회원가입) */
-.auth-container {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 40px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.auth-container h2 {
-    font-weight: 700;
-    font-size: 30px;
-    color: #1e56a0;
-    margin-bottom: 25px;
-}
-
-
-.auth-btn{
-    background: #1e56a0;
-    color: #fff;
-    border: none;
-    width: 100%;
-    padding: 12px;
+.hero-btn::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #2b59a2;
     border-radius: 50px;
-    cursor: pointer;
-    margin-top: 6px;
-    font-weight: 600;
-    font-size: 18px;
-    color:#dffd34;
+    z-index: -1;
 }
 
-
-.auth-btn:hover {
-    background: #dffd34;
-    transform: translateY(-2px);
-    color: #2b59a2;
-    font-weight: 900;
-    font-size: 14px;
-
+@keyframes electric-flow { 100% { transform: rotate(360deg); } }
+@keyframes slideInUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-.auth-form input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-/* 1. 3x3 상품 그리드 레이아웃 */
-.product-title{
-    font-size: 120px; 
-    font-weight: 900;
-    margin: 15% 0 0 0;
-    letter-spacing: -2px;
-    text-transform: uppercase;
-    line-height: 0.9;
-}
-
-
-
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 칼같은 3열 정렬 */
-    gap: 40px;
-    padding: 60px 10%;
-    position: relative;
-    z-index: 1;
-}
-
-/* 2. 상품 카드 및 이미지 줌 효과 */
-.product-card {
+/* 4. 팀 슬라이더 (PC/모바일 공통 - 미디어쿼리 밖) */
+.team-slider-container {
+    max-width: 1100px;
+    margin: -60px auto 80px; /* 히어로 섹션 하단에 걸치게 */
     background: #fff;
-    border-radius: 15;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
-
-.product-img-wrapper {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1 / 1; /* 정사각 비율 유지 */
-    overflow: hidden; /* 확대 시 이미지 이탈 방지 */
-    background: #f9f9f9;
-}
-
-.product-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease; /* 부드러운 확대 */
-}
-
-.product-card:hover .product-img-wrapper img {
-    transform: scale(1.1); /* 마우스 호버 시 이미지 확대 */
-}
-
-/* 3. 상품 정보 (폰트 사양 준수) */
-.product-info {
-    padding: 20px 5px;
-    text-align: left;
-}
-
-.product-name {
-    font-weight: 400;   /* 사양: 400 */
-    font-size: 20px;    /* 사양: 20px */
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.price-container {
     display: flex;
-    justify-content: space-between; /* 가격 왼쪽, 아이콘 오른쪽 */
     align-items: center;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 100;
 }
 
-.product-price {
-    font-weight: 700;   /* 사양: 700 */
-    font-size: 16px;    /* 사양: 16px */
-    color: #222;
+.team-track-wrapper {
+    overflow: hidden;
+    flex: 1;
 }
 
-/* 4. 위시리스트 & 장바구니 아이콘 */
-.action-icons {
+.team-track {
     display: flex;
-    gap: 15px;
+    transition: transform 0.5s ease-in-out;
 }
 
-.wish-btn, .cart-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    transition: transform 0.2s ease;
-    padding: 0;
+.team-item {
+    flex: 0 0 20%; /* PC 5개 */
+    display: flex;
+    justify-content: center;
 }
 
-.wish-btn:hover, .cart-btn:hover {
-    transform: scale(1.2);
-}
-
-/* 5. VIEW MORE 버튼 스타일 */
-.view-more-container {
-    text-align: center;
-    padding: 40px 0 80px;
-}
-
-.view-more-btn {
-    padding: 15px 50px;
-    font-weight: 00;
-    font-size: 14px;
-    cursor: pointer;
+.team-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: 0.3s;
 }
 
-/* .view-more-btn:hover {
-    
-    
-} */
-
-
-
-
-
-
-
-
-
-/* 6. 반응형 레이아웃 */
-@media (max-width: 1024px) {
-    .premium-header { height: 70px; padding: 1% 5%; }
-    .product-grid { padding: 3% 5%; }
-   
+.team-circle:hover {
+    border-color: #2b59a2;
+    transform: translateY(-5px);
+    /* background: #fff; */
 }
 
+.team-name { font-weight: 800; color: #333; }
+
+.slide-arrow {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 px;
+    transition: 0.3s;
+}
+
+.slide-arrow:hover:not(:disabled) { color: #2b59a2; }
+
+/* 5. 반응형 (모바일) */
 @media (max-width: 768px) {
-    .premium-header { height: 95px; display: flex; justify-content: right;
-         align-items:end; flex-direction: column; gap: 15px; }
-    .hero-title { font-size: 40px; }
-    .product-grid { grid-template-columns: 1fr; }
-
-    .hero-subtitle {
-        top: -15%;         
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 23px;
-        font-weight: 400;
-        color: #dffd34;
-    }
-
-
-    .hero-title {
-    font-size: 100px; 
-    font-weight: 900;
-    margin: 20% 0 0 0;
-    letter-spacing: -2px;
-    text-transform: uppercase;
-}
-
-
-}
-
-@media (max-width: 500px) {
-    
-    
-    .header {height: 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items:center;
-    padding:  0 10%;
-    background: #fff;
-    height: 80px; 
-    font-size: 10px;
-    position: sticky;}
-
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
-    .hero-title { 
-        justify-content: center; align-items: center; font-size: 30px; margin: 0;
-    }
-    .premium-header-header{margin-bottom: 20%;}
-    .hero-subtitle {
-     
-    align-items: center;
-    justify-content: center;
-    transform: translateX(-50%);
-    font-size: 17px;
-    font-weight: 400;
+    .premium-header { height: 80px; }
+    .hero-title { font-size: 60px; }
+    .team-item { flex: 0 0 33.33%; } /* 모바일 3개 */
+    .team-circle { width: 70px; height: 70px; }
+    .team-slider-container { margin: -40px 20px 40px; }
+    .hero-btn:hover {
     color: #dffd34;
-    }
-
-    .hero-title {
-    font-size: 80px; 
-    font-weight: 900;
-    margin: 48% 0 0 0;
-    letter-spacing: -2px;
-    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(223, 253, 52, 0.4); /* 미세한 글로우 */
 }
-    
 
-
-
+.hero-btn:hover::after {
+    background: #1e56a0; /* 호버 시 안쪽 배경색 살짝 변경 */
+}
 }

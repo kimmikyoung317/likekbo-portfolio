@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -32,11 +32,14 @@ public class Product {
     @Column(name = "stock") // 사진 속 DB 컬럼명이 'stock'이므로 맞춰줍니다.
     private Integer stockQuantity;
 
-    @Column(name = "team_name") // 사진 속 컬럼명 'team_name'과 연결
-    private String teamName; // [주의] 한글 데이터를 받기 위해 잠시 String으로 변경 추천
+//    @Column(name = "team_name") // 사진 속 컬럼명 'team_name'과 연결
+//    private String teamName; // [주의] 한글 데이터를 받기 위해 잠시 String으로 변경 추천
 
     @Column(name = "image_url") // 사진에 있는 이미지 경로 컬럼
     private String imageUrl;
+
+    @Column(name = "team_name")
+    private String team;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

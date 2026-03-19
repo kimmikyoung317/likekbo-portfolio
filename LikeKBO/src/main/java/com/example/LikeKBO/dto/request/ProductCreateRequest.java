@@ -18,11 +18,13 @@ public class ProductCreateRequest<T> {
     @Min(0)
     private Long price;
 
-    @NotNull(message = "재고량은 필수입니다.")
-    @Min(0)
+    @Min(value = 0, message = "재고량은 0개 이상이어야 합니다.")
+    @NotNull(message = "재고량 필드는 반드시 존재해야 합니다.")
     private Integer stockQuantity;
 
     private T detail; // 타입 매개변수 적용
 
     private String imageUrl;
+
+    private String team;
 }

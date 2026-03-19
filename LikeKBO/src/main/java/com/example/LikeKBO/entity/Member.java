@@ -1,33 +1,33 @@
 package com.example.LikeKBO.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
-@Table(name = "member")
+@Getter @Setter // ⚾️ 이 녀석이 getPassword(), getRole() 등을 자동으로 만들어줍니다!
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "login_id", unique = true)
+    @Column(unique = true, nullable = false)
     private String loginId;
 
-    @Column(name="email", unique = true)
+    // ⚾️ 핵심: 비밀번호 필드가 반드시 'password'라는 이름으로 있어야 합니다.
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String role; // ADMIN 또는 USER
+
+    private String name;
     private String email;
 
-
-    @Column(name="phone")
-    private String phone;
-
-
-    @OneToOne
-    @JoinColumn(name = "user_id") //  "user_fk_id"
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
-
-    //private String password;
 }

@@ -5,27 +5,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-    @Entity
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public class CartItem {
+@Entity
+@Getter @Setter
+@NoArgsConstructor
+public class CartItem {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @ManyToOne
-        @JoinColumn(name = "cart_id")
-        private Cart cart;
+    // 유저 식별용 이메일 [cite: 2026-01-20]
+    private String email;
 
+    private Long productId;
 
-        @ManyToOne
-        @JoinColumn(name = "product_id")
-        private Product product;
+    private int quantity;
 
-        private int puantity;
-    }
-
-
-
+    // 팀 정보 (KIA, Lotte, Samsung 정렬을 위해 필요) [cite: 2026-01-27]
+    private String teamName;
+}

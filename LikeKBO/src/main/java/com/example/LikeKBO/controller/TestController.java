@@ -1,7 +1,5 @@
 package com.example.LikeKBO.controller;
 
-
-
 import com.example.LikeKBO.entity.Product;
 import com.example.LikeKBO.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
