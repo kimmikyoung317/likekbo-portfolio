@@ -1,3 +1,8 @@
+
+import './LinuxProjectSection.css';
+
+
+
 function LinuxProjectSection() {
   const skills = [
     "nmap / OpenVAS를 활용한 취약점 진단",
@@ -30,6 +35,27 @@ function LinuxProjectSection() {
           서버 취약점 분석부터 보안 정책 적용, 로그 분석 자동화까지 직접 수행한
           인프라·보안 프로젝트입니다.
         </p>
+
+
+                  <div className="linux-buttons">
+
+          <a 
+          href="/linux-project/LinuxSecurityProject.pdf" 
+          target="_blank"
+          className="linux-btn"
+          >
+          📄 PPT 보기
+          </a>
+
+          <a 
+          href="/linux-project/LinuxSecurityProject.pdf" 
+          download
+          className="linux-btn-outline"
+          >
+          ⬇ 다운로드
+          </a>
+
+          </div>
 
         <div className="linux-project-layout">
           <div className="card linux-project-main">

@@ -29,7 +29,7 @@ function Home() {
       <section id="server">
         <h2 className="section-divider">Additional Project</h2>
         <h2 className="section-divider">INFRA / SECURITY PROJECT</h2>
-        {/* <LinuxProjectSection /> */}
+        <LinuxProjectSection />
       </section>
 
       <section id="design">

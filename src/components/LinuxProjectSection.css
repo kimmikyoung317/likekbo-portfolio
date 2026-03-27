@@ -1,0 +1,22 @@
+.linux-buttons{
+display:flex;
+gap:16px;
+margin:20px 13px;
+}
+
+.linux-btn{
+background:#38bdf8;
+color:white;
+padding:12px 20px;
+border-radius:10px;
+font-weight:600;
+text-decoration:none;
+}
+
+.linux-btn-outline{
+border:1px solid #38bdf8;
+color:#38bdf8;
+padding:12px 20px;
+border-radius:10px;
+text-decoration:none;
+}
