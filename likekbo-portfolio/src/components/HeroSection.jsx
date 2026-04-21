@@ -1,3 +1,5 @@
+import React from "react";
+
 function HeroSection() {
   return (
     <section className="hero">
@@ -6,9 +8,10 @@ function HeroSection() {
 
         <h2>
           기획부터 구현, 문제 해결까지 직접 경험한
-          <br /></h2>
-          <h1>KBO⚾Like 전자상거래 프로젝트
-        </h1>
+          <br />
+        </h2>
+
+        <h1>KBO⚾Like 전자상거래 프로젝트</h1>
 
         <p className="hero-desc">
           React, Spring Boot, MySQL을 활용해 사용자 기능과 관리자 기능을 구현하고,
@@ -16,20 +19,25 @@ function HeroSection() {
         </p>
 
         <button
-          onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+          onClick={() =>
+            window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
+          }
           className="hero-btn"
         >
-          프로젝트 보기 
+          프로젝트 보기
         </button>
-        
 
         <div className="hero-badges">
           <span>React</span>
           <span>Vite</span>
           <span>Spring Boot</span>
+          <span>Spring Security</span>
           <span>MySQL</span>
           <span>JWT</span>
-          <span>REST API</span>
+          <span>Docker</span>
+          <span>Linux</span>
+          <span>GitHub</span>
+          <span>Photoshop · Illustrator</span>
         </div>
       </div>
     </section>
