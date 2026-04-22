@@ -23,14 +23,18 @@ function HeroSection() {
         </button>
         
 
-        <div className="hero-badges">
-          <span>React</span>
-          <span>Vite</span>
-          <span>Spring Boot</span>
-          <span>MySQL</span>
-          <span>JWT</span>
-          <span>REST API</span>
-        </div>
+     <div className="hero-badges">
+      <span>React</span>
+      <span>Vite</span>
+      <span>Spring Boot</span>
+      <span>Spring Security</span>
+      <span>MySQL</span>
+      <span>JWT</span>
+      <span>Docker</span>
+      <span>Linux</span>
+      <span>GitHub</span>
+      <span>Photoshop · Illustrator</span>
+    </div>
       </div>
     </section>
   );
