@@ -30,7 +30,6 @@ function HeroSection() {
       <span>Spring Security</span>
       <span>MySQL</span>
       <span>JWT</span>
-      <span>Docker</span>
       <span>Linux</span>
       <span>GitHub</span>
       <span>Photoshop · Illustrator</span>
